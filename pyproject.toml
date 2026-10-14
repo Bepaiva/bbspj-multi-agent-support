@@ -1,0 +1,19 @@
+[project]
+name = "getnet-multi-agent-support"
+version = "1.0.0"
+description = "Multi-agent customer support system for Getnet (Router, Knowledge/RAG, Customer Support, Escalation) built with LangGraph and FastAPI"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q -m 'not live'"
+markers = ["live: hits real OpenAI / web APIs (set OPENAI_API_KEY and run `pytest -m live`)"]
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]

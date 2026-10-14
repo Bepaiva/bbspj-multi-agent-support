@@ -1,0 +1,19 @@
+services:
+  api:
+    build:
+      context: .
+      args:
+        INSTALL_DEV: "true"   # include pytest so `docker compose run --rm api pytest` works
+    image: getnet-multi-agent-support:latest
+    container_name: getnet-multi-agent-support
+    env_file:
+      - path: .env
+        required: false
+    ports:
+      - "8000:8000"
+    volumes:
+      - storage:/app/storage  # Chroma index + handoff log survive restarts
+    restart: unless-stopped
+
+volumes:
+  storage:

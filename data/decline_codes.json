@@ -1,0 +1,21 @@
+{
+  "_comment": "Common authorization response codes (ISO 8583 / Brazilian acquirer convention). Used by the Customer Support agent's explain_decline_code tool.",
+  "codes": {
+    "05": {"meaning": "Not authorised by the card issuer (generic decline)", "who": "issuer", "action": "Ask the customer to contact their bank or use another card."},
+    "14": {"meaning": "Invalid card number", "who": "card", "action": "Re-insert the card or try another payment method."},
+    "41": {"meaning": "Card reported lost", "who": "issuer", "action": "Do not retry. Ask for another payment method."},
+    "43": {"meaning": "Card reported stolen", "who": "issuer", "action": "Do not retry. Ask for another payment method."},
+    "51": {"meaning": "Insufficient funds or credit limit", "who": "cardholder", "action": "Ask the customer to use another card, a lower amount or another method (e.g. Pix)."},
+    "54": {"meaning": "Expired card", "who": "card", "action": "Ask for a valid card."},
+    "55": {"meaning": "Incorrect PIN", "who": "cardholder", "action": "Ask the customer to retry the PIN carefully; after several errors the card may be blocked."},
+    "57": {"meaning": "Transaction not permitted for this card (e.g. function or installments not allowed)", "who": "issuer", "action": "Try the other function (debit/credit), fewer installments or another card."},
+    "58": {"meaning": "Transaction not permitted for this terminal/merchant (brand or product not enabled)", "who": "merchant", "action": "Check enabled brands/products in the Getnet app or contact Getnet to enable them."},
+    "59": {"meaning": "Suspected fraud", "who": "issuer", "action": "Ask the customer to contact their bank. Do not split the sale to bypass the decline."},
+    "61": {"meaning": "Amount exceeds the withdrawal/transaction limit", "who": "issuer", "action": "Try a lower amount or another card."},
+    "62": {"meaning": "Restricted card (e.g. domestic/international restriction)", "who": "issuer", "action": "Customer must contact their bank."},
+    "75": {"meaning": "Too many incorrect PIN attempts", "who": "cardholder", "action": "Card PIN is blocked - customer must contact their bank."},
+    "91": {"meaning": "Issuer or switch unavailable", "who": "network", "action": "Wait a few minutes and retry."},
+    "96": {"meaning": "System malfunction", "who": "acquirer/terminal", "action": "Check terminal connectivity, run the communication test and initialise the terminal; contact Getnet if it persists."},
+    "N7": {"meaning": "Invalid security code (CVV)", "who": "cardholder", "action": "Re-enter the CVV (keyed/online sales)."}
+  }
+}
