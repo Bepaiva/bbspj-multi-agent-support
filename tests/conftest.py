@@ -12,6 +12,7 @@ if os.getenv("OPENAI_API_KEY") and not os.getenv("LIVE_OPENAI_API_KEY"):
     os.environ["LIVE_OPENAI_API_KEY"] = os.environ["OPENAI_API_KEY"]
 os.environ.update({
     "ENVIRONMENT": "test",
+    "LLM_PROVIDER": "openai",  # tests inject fakes explicitly; keep the API's 503-without-key path testable
     "EMBEDDINGS_PROVIDER": "hash",
     "CHROMA_DIR": str(_TMP / "chroma"),
     "HANDOFF_FILE": str(_TMP / "handoffs.jsonl"),

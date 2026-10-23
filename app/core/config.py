@@ -23,6 +23,9 @@ class Settings(BaseSettings):
     admin_token: str | None = None  # protects POST /admin/ingest when set
 
     # --- LLM -----------------------------------------------------------------
+    # "fake" = deterministic scripted model (tests/fakes.py) for offline development only,
+    # e.g. in a cloud workspace without network access to the OpenAI API.
+    llm_provider: Literal["openai", "fake"] = "openai"
     openai_api_key: str | None = None
     openai_base_url: str | None = None
     chat_model: str = "gpt-4o-mini"
@@ -59,6 +62,10 @@ class Settings(BaseSettings):
     max_agent_iterations: int = Field(default=5, ge=1, le=10)
     router_confidence_threshold: float = 0.55
     history_turns: int = 6
+
+    @property
+    def llm_configured(self) -> bool:
+        return self.llm_provider == "fake" or bool(self.openai_api_key)
 
     @property
     def effective_router_model(self) -> str:

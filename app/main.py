@@ -135,9 +135,10 @@ async def ready():
         chunks = get_knowledge_store().count()
     except Exception as exc:
         return JSONResponse(status_code=503, content={"ready": False, "error": str(exc)})
-    ok = chunks > 0 and bool(settings.openai_api_key)
+    ok = chunks > 0 and settings.llm_configured
     return JSONResponse(status_code=200 if ok else 503, content={
-        "ready": ok, "knowledge_base_chunks": chunks, "llm_configured": bool(settings.openai_api_key),
+        "ready": ok, "knowledge_base_chunks": chunks, "llm_configured": settings.llm_configured,
+        "llm_provider": settings.llm_provider, "embeddings_provider": settings.embeddings_provider,
         "ingestion": _state["ingest"], "model": settings.chat_model})
 
 

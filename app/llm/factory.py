@@ -22,8 +22,14 @@ class MissingAPIKeyError(RuntimeError):
 
 def get_chat_model(model: str | None = None, settings: Settings | None = None) -> BaseChatModel:
     settings = settings or get_settings()
+    if settings.llm_provider == "fake":
+        # Offline development only: a rule-based model that calls the real tools and echoes
+        # their results. Lets the whole graph run without network access to an LLM provider.
+        from tests.fakes import PolicyChatModel
+
+        return PolicyChatModel(calls=[])
     if not settings.openai_api_key:
-        raise MissingAPIKeyError("OPENAI_API_KEY is not set - see .env.example")
+        raise MissingAPIKeyError("OPENAI_API_KEY is not set - see .env.example (or set LLM_PROVIDER=fake offline)")
     from langchain_openai import ChatOpenAI
 
     return ChatOpenAI(

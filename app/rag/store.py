@@ -50,7 +50,10 @@ class KnowledgeStore:
                  persist: bool = True) -> None:
         self.settings = settings or get_settings()
         self.embeddings = embeddings or get_embeddings(self.settings)
-        kwargs = {"collection_name": self.settings.chroma_collection, "embedding_function": self.embeddings,
+        # One collection per embedding provider: vectors from different models have different
+        # dimensions, so switching EMBEDDINGS_PROVIDER must not reuse an incompatible index.
+        collection = f"{self.settings.chroma_collection}_{self.settings.embeddings_provider}"
+        kwargs = {"collection_name": collection, "embedding_function": self.embeddings,
                   "collection_metadata": {"hnsw:space": "cosine"}}
         if persist:
             self.settings.chroma_dir.mkdir(parents=True, exist_ok=True)
